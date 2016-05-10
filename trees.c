@@ -146,8 +146,21 @@ void pt(tree t)
 	if(t == NULL) {
 	}
 	else {
-		pt(t -> left);
-		printf("%d ",t -> value);
+		if(t->right != NULL && t->left != NULL) {
+			printf("(%c",t -> value);
+		}
+		else {
+			if(t->left == NULL && t->right != NULL) {
+				printf("(%c#",t->value);
+			}
+			else if(t->left != NULL && t->right == NULL) {
+				printf("(%c#",t->value);
+			}
+			else if(t->left == NULL && t->right == NULL) {
+				printf("(%c##)",t->value);
+			}
+		}
+		pt(t ->left);
 		pt(t ->right);
 	}
 }
@@ -157,7 +170,7 @@ void print_tree(char *msg, tree t)
   printf("%s: ", msg);
   fflush(stdout);
   pt(t);
-  printf("\n");
+  printf(")\n");
 }
 
 void print_tree_plus(char *before, tree t, char *after)
@@ -228,66 +241,32 @@ void print_inorder(tree t)
  *****************************************/
 
 char BST_find(tree t, char target)
-{/*
-	struct node *par=NULL,*loc=NULL;
-	struct node *ptr=NULL;
-	if(t == NULL) {
-		printf("Tree Doesn't Exist");
-		loc = NULL;par = NULL;
-		exit(0);
+{
+	char a;
+	if (t == NULL || t->value == target) {
+		a = t->value;
 	}
-	par = NULL;loc = NULL;
-	ptr = t;
-	while (ptr != NULL) {
-      		if (ptr->value == target) {
-			loc = ptr;
-			printf("%d %d",loc->value, par->value);			
-	 		printf("\nThe %d Element is Present", ptr->value);
-//			return temp;
-			exit(0);
-      		}
-	//	*parent = temp;
- 		else if (ptr->value > target) {
-        	 	par = ptr;
-			ptr = ptr->left;
-      		}
-		else {
-        		par = ptr;
-			ptr = ptr->right;
-		}
-   	}
-	if (loc == NULL) {
-		printf("Not Found");
+        if (t->value < target) {
+    		a = BST_find(t->right, target);	
 	}
-	char a = loc->value;
+	if (t->value > target) {
+		a = BST_find(t->left, target);
+	}
 	return a;
-*/
-	return target;
 }
-
 tree BST_insert(tree t, char value)
-{/*
-	struct node *loc=NULL,*par=NULL;
-	char a = BST_find(t,value);
-	if(loc != NULL) {
-		printf("Node Exist");
-		exit(0);
+{
+	if (t == NULL) {
+		struct node *temp = malloc(sizeof(struct node));
+		temp->value = value;
+		temp->left = temp->right = NULL;
+		t = temp;
 	}
-	struct node new1 = malloc(sizeof (struct node));
-	new1 -> info = value;
-	new1->left = NULL;new1->right = NULL;
-	if(par = NULL) {
-		t = new1;
-		exit(0);
+	if (value < t->value) {
+        	t->left  = BST_insert(t->left, value);
 	}
-	else if(new1->info < par->info) {
-		par ->left = new1;
-		exit(0);
-	}
-	else {
-		par -> right = new1;
-		exit(0);
-	}
-*/
+	else if (value > t->value) {
+        	t->right = BST_insert(t->right, value);   
+ 	}
 	return t;
 }
