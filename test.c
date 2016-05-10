@@ -13,7 +13,7 @@ void show_tree(char *t)
 {
   int counter = 0;
 
-  printf("show_tree:%s\n", t);
+  printf("show_tree:%s", t);
   fflush(stdout);
   print_tree("\nProduces", make_tree(NULL, t, &counter));
 }
@@ -147,7 +147,7 @@ void test_bst(char *items)
     bst = BST_insert(bst, items[i]);
   }
   printf("Added items %s to binary search tree\n", items);
-  print_tree("Result: ", bst);
+  print_tree("Result", bst);
 }
 
 void test5(void)
